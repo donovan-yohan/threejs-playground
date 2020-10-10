@@ -1,0 +1,20 @@
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+
+h1 {
+    color: red;
+}
+
+#container {
+    display: block;
+    position: absolute;
+    width: 100%;
+    opacity: 0.9;
+    --gradient-color-1: #a01be2;
+    --gradient-color-2: #16dbc7;
+    --gradient-color-3: #ffd239;
+    --gradient-color-4: #e92236;
+}
