@@ -79,7 +79,7 @@
                 layer.noiseFloor,
                 layer.noiseCeil,
                 snoise(vec2(
-                    uv.x * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow,
+                    uv.x * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow * 0.001,
                     uv.y * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.001
                 )) / 2.0 + 0.5
             );
