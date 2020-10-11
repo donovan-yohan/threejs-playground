@@ -9,12 +9,23 @@ h1 {
 }
 
 #container {
-    display: block;
-    position: absolute;
     width: 100%;
-    opacity: 0.9;
-    --gradient-color-1: #a01be2;
+    mix-blend-mode: multiply;
+    z-index: -1;
+    --gradient-color-1: #e92236;
     --gradient-color-2: #16dbc7;
     --gradient-color-3: #ffd239;
-    --gradient-color-4: #e92236;
+    --gradient-color-4: #a01be2;
+}
+#content {
+    position: absolute;
+    overflow: hidden;
+    height: 500px;
+    top: 0;
+    opacity: 0.2;
+}
+
+#wrapper {
+    height: 500px;
+    overflow: hidden;
 }
