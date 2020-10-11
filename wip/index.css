@@ -17,15 +17,14 @@ h1 {
     --gradient-color-3: #ffd239;
     --gradient-color-4: #a01be2;
 }
+
 #content {
     position: absolute;
-    overflow: hidden;
     height: 500px;
     top: 0;
-    opacity: 0.2;
+    opacity: 0.1;
 }
 
 #wrapper {
     height: 500px;
-    overflow: hidden;
 }

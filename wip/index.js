@@ -1,16 +1,21 @@
 import * as THREE from 'https://unpkg.com/three@0.121.1/build/three.module.js';
 
 // mess with these to change how the animation looks, edit CSS variables to modify gradient colours
-const WAVE_X_FREQ = 1.0;
-const WAVE_Y_FREQ = 0.8;
-const WAVE_SPEED = 50;
-const WAVE_SPEED_VARIATION = 25;
-const WAVE_FLOW = 5.0;
-const WAVE_FLOW_VARIATION = 75.0;
-const SEED = 7.0;
-const WAVE_NOISE_FLOOR = 0.3;
-const WAVE_NOISE_CEIL = 0.56;
+const GRADIENT_VARIABLE_NAME = "gradient-color";
+const WAVE_X_FREQ = 0.45;
+const WAVE_Y_FREQ = 0.7;
+const WAVE_SPEED = 10.0;
+const WAVE_SPEED_VARIATION = 15.0;
+const WAVE_FLOW = 20.0;
+const WAVE_FLOW_VARIATION = 15.0;
+const SEED = 8.0;
+const WAVE_NOISE_FLOOR = 0.35;
+const WAVE_NOISE_CEIL = 0.58;
 const WAVE_NOISE_VARIATION = 0.05;
+const NOISE_SEPARATION = 55.0;
+
+const INCLINE = 0.009;
+const OFFSET_VERTICAL = -1.5;
 
 var container;
 var camera, scene, renderer;
@@ -39,10 +44,22 @@ function init() {
         },
         u_waves: {
             value: []
+        },
+        u_total_colors: {
+            value: gradientColors.length
+        },
+        u_position: {
+            value: {
+                incline: INCLINE,
+                offset_vert: OFFSET_VERTICAL,
+            }
+        },
+        u_noise_magnitude: {
+            value: NOISE_SEPARATION
         }
     };
 
-    for(let i = 0; i < gradientColors.length; i++) {
+    for (let i = 0; i < gradientColors.length; i++) {
         let wave = {
             color: new THREE.Vector3(...gradientColors[i]),
             noiseFreq: new THREE.Vector2(WAVE_X_FREQ + i / gradientColors.length, WAVE_Y_FREQ + i / gradientColors.length),
@@ -103,7 +120,15 @@ function render() {
 }
 
 function initGradientColors(container) {
-    gradientColors = ["--gradient-color-1", "--gradient-color-2", "--gradient-color-3", "--gradient-color-4"].map(cssPropertyName => {
+    let color = getComputedStyle(container).getPropertyValue("--" + GRADIENT_VARIABLE_NAME + "-1");
+    let current = 1;
+    while (color != "") {
+        gradientColors.push("--" + GRADIENT_VARIABLE_NAME + "-" + current);
+        color = getComputedStyle(container).getPropertyValue("--" + GRADIENT_VARIABLE_NAME + "-" + ++current);
+
+    }
+
+    gradientColors = gradientColors.map(cssPropertyName => {
         let hex = getComputedStyle(container).getPropertyValue(cssPropertyName).trim();
         //Check if shorthand hex value was used and double the length so the conversion in normalizeColor will work.
         if (4 === hex.length) {
