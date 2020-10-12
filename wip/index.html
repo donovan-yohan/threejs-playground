@@ -3,21 +3,24 @@
     <script src="fragment.frag" type="x-shader/x-fragment"></script>
     <link rel="stylesheet" href="index.css">
     <script id="vertexShader" type="x-shader/x-vertex">
-        uniform vec2 iResolution;
-
         struct Position {
             float incline;
-            float offset_vert;
+            float offsetVert;
+            vec2 noiseFreq;
+            float noiseFlow;
+            float noiseAmp;
+            float noiseSeed;
         };
 
         uniform Position u_position;
+        uniform vec2 iResolution;
 
         void main() {
             // Left-to-right angle
             float incline = iResolution.x * uv.x / 2.0 * u_position.incline;
 
             // Up-down shift to offset incline
-            float offset = iResolution.x / 2.25 * u_position.incline * 0.2 + u_position.offset_vert;
+            float offset = iResolution.x / 2.25 * u_position.incline * 0.2 + u_position.offsetVert;
 
             vec3 pos = vec3(
                 position.x,
@@ -40,6 +43,8 @@
             float noiseSeed;
             float noiseFloor;
             float noiseCeil;
+            float offsetHorz;
+            float offsetVert;
         };
 
         uniform vec2 iResolution;
@@ -103,8 +108,8 @@
                     layer.noiseFloor,
                     layer.noiseCeil,
                     snoise(vec2(
-                        uv.x * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow * 0.001 + layer.noiseSeed,
-                        uv.y * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.001 + layer.noiseSeed
+                        (uv.x * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetHorz * sin(0.01 * iGlobalTime) * float(i),
+                        (uv.y * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetVert * sin(0.01 * iGlobalTime) * float(i)
                     )) / 2.0 + 0.5
                 );
 

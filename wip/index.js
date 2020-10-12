@@ -4,11 +4,11 @@ import * as THREE from 'https://unpkg.com/three@0.121.1/build/three.module.js';
 const GRADIENT_VARIABLE_NAME = "gradient-color";
 const WAVE_X_FREQ = 0.45;
 const WAVE_Y_FREQ = 0.7;
-const WAVE_SPEED = 10.0;
+const WAVE_SPEED = 25.0;
 const WAVE_SPEED_VARIATION = 15.0;
-const WAVE_FLOW = 20.0;
-const WAVE_FLOW_VARIATION = 15.0;
-const SEED = 8.0;
+const WAVE_FLOW = 45.0;
+const WAVE_FLOW_VARIATION = 25.0;
+const SEED = 250.0;
 const WAVE_NOISE_FLOOR = 0.35;
 const WAVE_NOISE_CEIL = 0.58;
 const WAVE_NOISE_VARIATION = 0.05;
@@ -51,7 +51,11 @@ function init() {
         u_position: {
             value: {
                 incline: INCLINE,
-                offset_vert: OFFSET_VERTICAL,
+                offsetVert: OFFSET_VERTICAL,
+                noiseFreq: new THREE.Vector2(1.0, 1.0),
+                noiseFlow: 1.0,
+                noiseAmp: 1.0,
+                noiseSeed: 1.0,
             }
         },
         u_noise_magnitude: {
@@ -63,11 +67,13 @@ function init() {
         let wave = {
             color: new THREE.Vector3(...gradientColors[i]),
             noiseFreq: new THREE.Vector2(WAVE_X_FREQ + i / gradientColors.length, WAVE_Y_FREQ + i / gradientColors.length),
-            noiseSpeed: WAVE_SPEED + WAVE_SPEED_VARIATION * i,
-            noiseFlow: WAVE_FLOW + WAVE_FLOW_VARIATION * i,
+            noiseSpeed: WAVE_SPEED + (i % 2 == 0 ? -1 : 1) * WAVE_SPEED_VARIATION * i,
+            noiseFlow: WAVE_FLOW + (i % 2 == 0 ? 1 : -1) * WAVE_FLOW_VARIATION * i,
             noiseSeed: SEED + 10 * i,
             noiseFloor: WAVE_NOISE_FLOOR,
-            noiseCeil: WAVE_NOISE_CEIL + i * WAVE_NOISE_VARIATION
+            noiseCeil: WAVE_NOISE_CEIL + i * WAVE_NOISE_VARIATION,
+            offsetHorz: i % 2 == 0 ? -1 : 1,
+            offsetVert: i % 3 == 0 ? -1 : 1
         }
         uniforms.u_waves.value.push(wave);
     }
