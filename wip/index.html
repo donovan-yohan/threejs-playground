@@ -109,7 +109,7 @@
                     layer.noiseCeil,
                     snoise(vec2(
                         (uv.x * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetHorz * sin(0.01 * iGlobalTime) * float(i),
-                        (uv.y * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetVert * sin(0.01 * iGlobalTime) * float(i)
+                        (uv.y * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetVert * cos(0.01 * iGlobalTime) * float(i)
                     )) / 2.0 + 0.5
                 );
 

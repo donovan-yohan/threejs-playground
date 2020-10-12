@@ -2,13 +2,13 @@ import * as THREE from 'https://unpkg.com/three@0.121.1/build/three.module.js';
 
 // mess with these to change how the animation looks, edit CSS variables to modify gradient colours
 const GRADIENT_VARIABLE_NAME = "gradient-color";
-const WAVE_X_FREQ = 0.45;
-const WAVE_Y_FREQ = 0.7;
-const WAVE_SPEED = 25.0;
+const WAVE_X_FREQ = 0.9;
+const WAVE_Y_FREQ = 0.6;
+const WAVE_SPEED = 5.0;
 const WAVE_SPEED_VARIATION = 15.0;
-const WAVE_FLOW = 45.0;
+const WAVE_FLOW = 50.0;
 const WAVE_FLOW_VARIATION = 25.0;
-const SEED = 250.0;
+const SEED = 469.0;
 const WAVE_NOISE_FLOOR = 0.35;
 const WAVE_NOISE_CEIL = 0.58;
 const WAVE_NOISE_VARIATION = 0.05;
