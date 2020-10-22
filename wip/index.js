@@ -1,4 +1,6 @@
 import * as THREE from 'https://unpkg.com/three@0.121.1/build/three.module.js';
+import fragment from './fragment.js'
+import vertex from './vertex.js'
 
 // mess with these to change how the animation looks, edit CSS variables to modify gradient colours
 const GRADIENT_VARIABLE_NAME = "gradient-color";
@@ -78,9 +80,8 @@ function init() {
         uniforms.u_waves.value.push(wave);
     }
 
-    console.log(uniforms);
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.z = 1;
+    
 
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff)
@@ -89,8 +90,8 @@ function init() {
 
     var material = new THREE.ShaderMaterial({
         uniforms: uniforms,
-        vertexShader: document.getElementById('vertexShader').textContent,
-        fragmentShader: document.getElementById('fragmentShader').textContent
+        vertexShader: vertex,
+        fragmentShader: fragment
     });
 
     var mesh = new THREE.Mesh(geometry, material);
@@ -99,17 +100,17 @@ function init() {
     renderer = new THREE.WebGLRenderer();
     container.appendChild(renderer.domElement);
 
+    uniforms.iResolution.value.x = window.innerWidth;
+    uniforms.iResolution.value.y = window.innerHeight;
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
     onWindowResize();
 
     window.addEventListener('resize', onWindowResize, false);
 }
 
 function onWindowResize(event) {
-    uniforms.iResolution.value.x = window.innerWidth;
-    uniforms.iResolution.value.y = window.innerHeight;
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
 
     camera.updateProjectionMatrix();
 }

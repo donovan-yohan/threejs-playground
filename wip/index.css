@@ -9,8 +9,8 @@ h1 {
 }
 
 #container {
+    overflow:hidden;
     width: 100%;
-    mix-blend-mode: multiply;
     z-index: -1;
     --gradient-color-1: #e92236;
     --gradient-color-2: #16dbc7;
