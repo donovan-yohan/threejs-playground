@@ -68,6 +68,8 @@ void main(void) {
     for (int i = 0; i < u_waves.length(); i++) {
         Wave layer = u_waves[i];
 
+        
+
         float noise = smoothstep(
             layer.noiseFloor,
             layer.noiseCeil,
@@ -77,7 +79,7 @@ void main(void) {
             )) / 2.0 + 0.5
         );
 
-        color = blendNormal(color, layer.color, pow(noise, 4.));
+        color = blendNormal(color, layer.color, pow(noise, float(i) * 0.15));
     }
 
     gl_FragColor = vec4(color, 1.0);

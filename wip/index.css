@@ -12,10 +12,10 @@ h1 {
     overflow:hidden;
     width: 100%;
     z-index: -1;
-    --gradient-color-1: #e92236;
+    --gradient-color-1: #ffd239;
     --gradient-color-2: #16dbc7;
-    --gradient-color-3: #ffd239;
-    --gradient-color-4: #a01be2;
+    --gradient-color-3: #a01be2;
+    --gradient-color-4: #e92236;
 }
 
 #content {

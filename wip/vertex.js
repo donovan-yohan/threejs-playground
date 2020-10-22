@@ -13,10 +13,10 @@ struct Position {
 
         void main() {
             // Left-to-right angle
-            float incline = iResolution.x * uv.x / 2.0 * u_position.incline;
+            float incline = iResolution.x * uv.x * u_position.incline - 5.5;
 
             // Up-down shift to offset incline
-            float offset = iResolution.x / 2.25 * u_position.incline * 0.2 + u_position.offsetVert;
+            float offset = u_position.offsetVert;
 
             vec3 pos = vec3(
                 position.x,
