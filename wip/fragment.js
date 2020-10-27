@@ -18,15 +18,6 @@ uniform float iGlobalTime;
 uniform float u_noise_magnitude;
 uniform Wave u_waves[TOTAL_COLORS];
 
-// From Stackoveflow
-// http://stackoverflow.com/questions/15095909/from-rgb-to-hsv-in-opengl-glsl
-vec3 hsv2rgb(vec3 c)
-{
-    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-}
-
 vec3 blendNormal(vec3 base, vec3 blend, float opacity) {
     return (blend * opacity + base * (1.0 - opacity));
 }
@@ -44,7 +35,7 @@ float snoise(vec2 v){
     vec4 x12 = x0.xyxy + C.xxzz;
     x12.xy -= i1;
     i = mod(i, 289.0);
-    vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+    vec3 p = permute(permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 )) ;
     vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
     m = m*m ;
     m = m*m ;
@@ -72,12 +63,12 @@ void main(void) {
             layer.noiseFloor,
             layer.noiseCeil,
             snoise(vec2(
-                (uv.x * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetHorz * sin(0.01 * iGlobalTime) * float(i),
-                (uv.y * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetVert * cos(0.01 * iGlobalTime) * float(i)
-            )) / 2.0 + 0.5
+                (uv.y * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetHorz * sin(0.01 * iGlobalTime) * float(i),
+                (uv.x * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetVert * cos(0.01 * iGlobalTime) * float(i)
+            )) / 2.0 + 0.48
         );
 
-        color = blendNormal(color, layer.color, pow(noise, float(i) * 0.2));
+        color = blendNormal(color, layer.color, pow(noise, float(i) * 0.12));
     }
 
     gl_FragColor = vec4(color, 1.0);
