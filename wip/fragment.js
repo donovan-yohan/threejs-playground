@@ -63,13 +63,15 @@ void main(void) {
             layer.noiseFloor,
             layer.noiseCeil,
             snoise(vec2(
-                (uv.y * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetHorz * sin(0.01 * iGlobalTime) * float(i),
-                (uv.x * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.001 + layer.noiseSeed) + 0.1 * layer.offsetVert * cos(0.01 * iGlobalTime) * float(i)
+                (uv.y * abs((sin(0.05 * layer.offsetHorz* iGlobalTime) - 2.)) * 0.1 * layer.noiseFreq.x + iGlobalTime * layer.noiseFlow * 0.005 + layer.noiseSeed) + layer.offsetHorz * 0.0001 * sin(iGlobalTime) * float(i),
+                (uv.x * abs(0.01 * (cos(0.1 * layer.offsetVert * iGlobalTime) - 10.5)) * layer.noiseFreq.y + iGlobalTime * layer.noiseSpeed * 0.005 + layer.noiseSeed) + layer.offsetVert * 0.0001 * cos(2. * iGlobalTime) * float(i)
             )) / 2.0 + 0.48
         );
 
-        color = blendNormal(color, layer.color, pow(noise, float(i) * 0.12));
+        color = blendNormal(color, layer.color, pow(noise, float(i) * 0.15));
     }
+
+    Wave layer = u_waves[0];
 
     gl_FragColor = vec4(color, 1.0);
 }

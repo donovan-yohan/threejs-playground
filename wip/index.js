@@ -4,12 +4,12 @@ import fragment from './fragment.js';
 // mess with these to change how the animation looks, edit CSS variables to modify gradient colours
 const GRADIENT_VARIABLE_NAME = "gradient-color";
 const THREE_COMPONENT_ID = "container"
-const WAVE_X_FREQ = 1.2;
-const WAVE_Y_FREQ = 0.5;
-const WAVE_SPEED = 15.0;
-const WAVE_SPEED_VARIATION = 5.0;
-const WAVE_FLOW = -5.0;
-const WAVE_FLOW_VARIATION = 5.0;
+const WAVE_X_FREQ = 5.2;
+const WAVE_Y_FREQ = 10.1;
+const WAVE_SPEED = 1.0;
+const WAVE_SPEED_VARIATION = -1.0;
+const WAVE_FLOW = 0.5;
+const WAVE_FLOW_VARIATION = 1.0;
 const SEED = 86.0;
 const WAVE_NOISE_FLOOR = 0.4;
 const WAVE_NOISE_CEIL = 0.5;
@@ -65,8 +65,8 @@ function init() {
             noiseSeed: SEED + 10 * i,
             noiseFloor: WAVE_NOISE_FLOOR,
             noiseCeil: WAVE_NOISE_CEIL + i * WAVE_NOISE_VARIATION,
-            offsetHorz: i % 2 == 0 ? -1 : 1,
-            offsetVert: i % 3 == 0 ? -1 : 1
+            offsetHorz: i % 2 == 0 ? -1 : 1 * WAVE_FLOW_VARIATION,
+            offsetVert: i % 3 == 0 ? -1 : 1 * WAVE_SPEED_VARIATION
         }
         uniforms.u_waves.value.push(wave);
     }
